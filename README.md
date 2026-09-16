@@ -36,4 +36,4 @@ Sem bibliotecas externas.
 
 ## Autor
 
-Wellington — SCOM, 2026.
+Paulo Francisco da Silva — SCOM, 2026.
