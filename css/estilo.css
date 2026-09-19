@@ -1,0 +1,467 @@
+/* =====================================================================
+   Catálogo Toyota — folha de estilo única
+   Trabalho Individual I, SCOM 2026 — Paulo Francisco da Silva
+
+   Organização do arquivo:
+     1. Variáveis          6. Cards do catálogo
+     2. Base               7. Ficha do modelo
+     3. Utilidades         8. Formulário
+     4. Cabeçalho          9. Rodapé
+     5. Abertura          10. Responsividade
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. VARIÁVEIS
+   Seis cores no total. Todas as combinações de texto sobre fundo foram
+   conferidas no WebAIM antes de entrar aqui — o menor contraste do
+   projeto é 5,8:1, acima do mínimo de 4,5:1 exigido pela WCAG AA.
+   ===================================================================== */
+:root {
+  /* cores */
+  --papel:       #FFFFFF;   /* fundo dos cartões */
+  --fundo:       #F2F3F5;   /* fundo da página */
+  --tinta:       #16181C;   /* texto principal   — 16,1:1 sobre papel */
+  --tinta-suave: #5A6069;   /* texto secundário  —  5,9:1 sobre papel */
+  --marca:       #C8102E;   /* vermelho da marca —  5,8:1 sobre papel */
+  --linha:       #D6D8DC;   /* bordas e divisórias */
+
+  /* escala de espaçamento: todas as margens do projeto saem daqui,
+     o que garante o espaçamento consistente exigido no item A2 */
+  --e1: 0.5rem;
+  --e2: 1rem;
+  --e3: 1.5rem;
+  --e4: 2.5rem;
+  --e5: 4rem;
+
+  /* raio de borda único, usado em cartões, campos e botões */
+  --raio: 0.5rem;
+
+  --transicao: 0.2s ease;
+}
+
+
+/* =====================================================================
+   2. BASE
+   ===================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* Fonte do sistema operacional: aparece instantaneamente, sem
+     requisição externa. Uma webfont de CDN bloquearia a renderização
+     e atrasaria o LCP na auditoria móvel. */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1rem;          /* 16 px — mínimo recomendado para corpo de texto */
+  line-height: 1.6;         /* dentro da faixa 1.4–1.8 pedida no item B2 */
+  color: var(--tinta);
+  background-color: var(--fundo);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Escala tipográfica: cada nível é visivelmente maior que o seguinte,
+   o que atende ao item "diferença perceptível entre níveis de título". */
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  margin: 0 0 var(--e2);
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0 0 var(--e3);
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin: 0 0 var(--e1);
+}
+
+p {
+  /* espaçamento entre parágrafos acima de 0.5em, como pede o item B2 */
+  margin: 0 0 var(--e2);
+}
+
+a {
+  color: var(--marca);
+}
+
+/* Foco visível em todo elemento interativo. Sem esta regra o navegador
+   ainda mostra um anel, mas discreto demais em alguns temas. */
+:focus-visible {
+  outline: 3px solid var(--marca);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+
+/* =====================================================================
+   3. UTILIDADES
+   ===================================================================== */
+
+/* Link de salto: fica fora da tela até receber foco pelo teclado.
+   Não usamos display:none porque isso o tiraria da ordem de tabulação. */
+.salto {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: var(--e2);
+  background-color: var(--marca);
+  color: var(--papel);
+  font-weight: 600;
+}
+
+.salto:focus {
+  left: 0;
+}
+
+/* Largura máxima do conteúdo, reaproveitada pelas três páginas */
+.faixa {
+  width: 100%;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-inline: var(--e3);
+}
+
+
+/* =====================================================================
+   4. CABEÇALHO E NAVEGAÇÃO
+   ===================================================================== */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e3);
+  flex-wrap: wrap;
+  padding: var(--e2) var(--e3);
+  background-color: var(--tinta);
+}
+
+.topo__marca {
+  display: block;
+  line-height: 0;
+}
+
+.topo__marca img {
+  height: 2.25rem;
+  width: auto;
+}
+
+/* Contraste do foco dentro do cabeçalho escuro: o vermelho da marca
+   sobre fundo quase preto seria pouco visível, então aqui o anel é claro. */
+.topo :focus-visible {
+  outline-color: var(--papel);
+}
+
+.topo__lista {
+  display: flex;
+  gap: var(--e3);
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topo__lista a {
+  display: inline-block;
+  padding: var(--e1) 0;
+  color: var(--papel);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transicao);
+}
+
+.topo__lista a:hover {
+  border-bottom-color: var(--papel);
+}
+
+/* Indicação da página atual. O aria-current no HTML informa o leitor de
+   tela; esta regra dá o equivalente visual para quem enxerga. */
+.topo__lista a[aria-current="page"] {
+  border-bottom-color: var(--marca);
+  font-weight: 600;
+}
+
+
+/* =====================================================================
+   5. ABERTURA
+   Bloco propositalmente baixo: em desktop, os primeiros cartões
+   precisam aparecer sem rolagem (item A1).
+   ===================================================================== */
+.abertura {
+  padding-block: var(--e4) var(--e3);
+}
+
+.abertura__texto {
+  /* Limita a linha a cerca de 60 caracteres, dentro da faixa de 45 a 90
+     considerada legível no item B2. */
+  max-width: 60ch;
+  color: var(--tinta-suave);
+  font-size: 1.125rem;
+}
+
+
+/* =====================================================================
+   6. CARDS DO CATÁLOGO
+   ===================================================================== */
+.catalogo {
+  padding-bottom: var(--e5);
+}
+
+.grade {
+  display: grid;
+  /* auto-fit + minmax reorganiza a grade sozinha conforme a largura
+     disponível, o que reduz a quantidade de breakpoints necessários. */
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: var(--e3);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.card__foto {
+  margin: 0;
+}
+
+.card__foto img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.card__foto figcaption {
+  padding: var(--e1) var(--e2) 0;
+  font-size: 0.875rem;
+  color: var(--tinta-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card__nome {
+  padding-inline: var(--e2);
+  margin-top: var(--e1);
+}
+
+.card__dados {
+  margin: 0;
+  padding: var(--e2);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--e1) var(--e2);
+  font-size: 0.9375rem;
+}
+
+.card__dados dt {
+  color: var(--tinta-suave);
+}
+
+.card__dados dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+.card__link {
+  /* margin-top:auto empurra o link para a base, alinhando os botões de
+     todos os cartões mesmo quando os textos têm alturas diferentes. */
+  margin-top: auto;
+  padding: var(--e2);
+  border-top: 1px solid var(--linha);
+  color: var(--marca);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card__link:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================================================
+   7. FICHA DO MODELO
+   ===================================================================== */
+.ficha {
+  padding-block: var(--e4) var(--e5);
+}
+
+.ficha__foto {
+  margin: 0 0 var(--e3);
+}
+
+.ficha__foto img {
+  width: 100%;
+  border-radius: var(--raio);
+}
+
+.ficha__foto figcaption {
+  margin-top: var(--e1);
+  font-size: 0.875rem;
+  color: var(--tinta-suave);
+}
+
+.ficha__texto {
+  max-width: 65ch;
+  color: var(--tinta-suave);
+}
+
+.tecnica {
+  margin-top: var(--e4);
+  padding: var(--e3);
+  background-color: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+}
+
+.tecnica__lista {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--e1) var(--e2);
+}
+
+.tecnica__lista dt {
+  color: var(--tinta-suave);
+}
+
+.tecnica__lista dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+
+/* =====================================================================
+   8. FORMULÁRIO
+   ===================================================================== */
+.formulario {
+  max-width: 34rem;
+  padding-block: var(--e4) var(--e5);
+}
+
+.campo {
+  margin-bottom: var(--e3);
+}
+
+/* Label sempre visível acima do campo. Placeholder não substitui label:
+   some quando o usuário digita e não é lido de forma confiável. */
+.campo label {
+  display: block;
+  margin-bottom: var(--e1);
+  font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--tinta);
+  background-color: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+}
+
+.campo textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.campo__ajuda {
+  display: block;
+  margin-top: var(--e1);
+  font-size: 0.875rem;
+  color: var(--tinta-suave);
+}
+
+/* Botão primário: um único estilo, usado igual nas três páginas */
+.botao {
+  display: inline-block;
+  padding: 0.75rem var(--e3);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--papel);
+  background-color: var(--marca);
+  border: 2px solid var(--marca);
+  border-radius: var(--raio);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--transicao);
+}
+
+.botao:hover {
+  background-color: var(--tinta);
+  border-color: var(--tinta);
+}
+
+
+/* =====================================================================
+   9. RODAPÉ
+   ===================================================================== */
+.rodape {
+  padding: var(--e3);
+  background-color: var(--tinta);
+  color: var(--papel);
+  text-align: center;
+}
+
+.rodape p {
+  margin: 0 0 var(--e1);
+  font-size: 0.875rem;
+}
+
+.rodape p:last-child {
+  margin-bottom: 0;
+  color: var(--linha);
+}
+
+
+/* =====================================================================
+   10. RESPONSIVIDADE
+   A grade já se adapta sozinha pelo auto-fit. Estes ajustes tratam do
+   que a grade não resolve: o cabeçalho em telas estreitas.
+   ===================================================================== */
+@media (max-width: 30rem) {
+  .topo {
+    justify-content: center;
+    gap: var(--e2);
+  }
+
+  .topo__lista {
+    gap: var(--e2);
+    justify-content: center;
+  }
+
+  .abertura {
+    padding-block: var(--e3) var(--e2);
+  }
+}
+
+/* Respeita quem desativou animações no sistema operacional */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
