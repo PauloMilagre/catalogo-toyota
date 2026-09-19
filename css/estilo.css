@@ -326,6 +326,7 @@ a {
 
 .tecnica {
   margin-top: var(--e4);
+  max-width: 40rem;
   padding: var(--e3);
   background-color: var(--papel);
   border: 1px solid var(--linha);
