@@ -15,7 +15,7 @@
    1. VARIÁVEIS
    Seis cores no total. Todas as combinações de texto sobre fundo foram
    conferidas no WebAIM antes de entrar aqui — o menor contraste do
-   projeto é 5,8:1, acima do mínimo de 4,5:1 exigido pela WCAG AA.
+   projeto é 5,71:1, acima do mínimo de 4,5:1 exigido pela WCAG AA.
    ===================================================================== */
 :root {
   /* cores */
@@ -380,7 +380,7 @@ a {
   font-size: 1rem;
   color: var(--tinta);
   background-color: var(--papel);
-  border: 1px solid var(--linha);
+  border: 1px solid var(--tinta-suave);
   border-radius: var(--raio);
 }
 
