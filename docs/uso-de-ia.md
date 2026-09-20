@@ -60,12 +60,25 @@ cada tela precisa mostrar continua sendo do estudante.)_
 
 ---
 
-## Registro 4 — data — (próximo uso)
+## Registro 4 — 20/09/2026 — Revisão de acessibilidade e auditoria
 
-**Finalidade:**
+**Finalidade:** revisar as três páginas e a folha de estilo à luz da WCAG 2.2 AA
+antes da primeira auditoria Lighthouse.
 
-**Trecho produzido:**
+**Trecho produzido:** nenhum código de página foi gerado pela IA. A ferramenta
+leu os arquivos existentes, calculou a razão de contraste de cada combinação de
+cor do projeto e apontou cinco correções: (1) aspas duplicadas no atributo `alt`
+da imagem da Hilux, que invalidava o HTML; (2) borda dos campos de formulário em
+1,43:1, abaixo dos 3:1 exigidos pelo critério 1.4.11, corrigida para
+`var(--tinta-suave)`; (3) comentário do CSS que declarava contraste mínimo de
+5,8:1 quando o real é 5,71:1; (4) ausência de favicon, que gerava 404 no console;
+(5) `fetchpriority="high"` na imagem de maior renderização.
 
-**Modificações realizadas:**
+**Modificações realizadas:** _(preencher: você aplicou as cinco edições à mão no
+VS Code. Registre se alterou alguma sugestão, e o que decidiu não fazer.)_
 
-**Avaliação crítica:**
+**Avaliação crítica:** _(preencher. Pontos que valem comentário: a falha de
+contraste da borda não é detectada pelo Lighthouse — só apareceu porque o
+critério 1.4.11 foi verificado manualmente; e a sugestão inicial da IA sobre a
+extensão de um arquivo estava errada, o que reforça que sugestão automatizada
+precisa de conferência.)_
