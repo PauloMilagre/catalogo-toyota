@@ -1,0 +1,14 @@
+* 759ad55 docs: registro de uso de IA da revisao de acessibilidade
+* 3da7636 docs: relatorios lighthouse mobile das tres paginas
+* 601c949 fix: acessibilidade, favicon e prioridade da imagem principal
+* af86384 capturas dos tres breakpoints
+* 965d7e9 style: limita a largura da ficha tecnica
+* 43ab0ad feat: adiciona paginas de ficha do modelo e agendamento
+* 2c0883f feat: adiciona folha de estilo com variaveis, grid e foco visivel
+* fa241d7 fix: corrige descricao da imagem do Supra
+* 725399d chore: adiciona imagens otimizadas e corrige textos alternativos
+* 9e45439 feat: adiciona estrutura semantica da pagina de catalogo
+* 58efc02 docs: adiciona artefatos de processo e registro de uso de IA
+* fe16d53 docs: corrige nome do autor no README
+* 1e8a88e docs: adiciona README com instruções de execução
+* d91e7f2 Initial commit
