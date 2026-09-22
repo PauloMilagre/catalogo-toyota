@@ -1,3 +1,5 @@
+* c0a5490 docs: validacao w3c, compatibilidade e checklist
+* cb6f80d fix: opcao vazia no select de periodo
 * 759ad55 docs: registro de uso de IA da revisao de acessibilidade
 * 3da7636 docs: relatorios lighthouse mobile das tres paginas
 * 601c949 fix: acessibilidade, favicon e prioridade da imagem principal

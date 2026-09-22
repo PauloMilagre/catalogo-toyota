@@ -100,7 +100,7 @@ bloqueia a renderização e adiciona uma requisição externa, atrasando o LCP n
 auditoria móvel. A pilha de fontes do sistema operacional aparece
 instantaneamente e não custa nenhuma requisição.
 
-**Paleta reduzida, com contraste verificado antes de implementar.** Cinco cores
+**Paleta reduzida, com contraste verificado antes de implementar.** Seis cores
 principais definidas como variáveis em `:root`. As combinações de texto sobre
 fundo foram checadas no WebAIM antes de entrar no CSS, em vez de corrigidas
 depois que o Lighthouse reclamar.

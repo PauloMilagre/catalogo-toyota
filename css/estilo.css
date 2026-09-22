@@ -190,7 +190,7 @@ a {
 
 /* Indicação da página atual. O aria-current no HTML informa o leitor de
    tela; esta regra dá o equivalente visual para quem enxerga. */
-.topo__lista a[aria-current="page"] {
+.topo__lista a[aria-current] {
   border-bottom-color: var(--marca);
   font-weight: 600;
 }
