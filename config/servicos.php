@@ -7,7 +7,9 @@ declare(strict_types=1);
  * Cada um é criado só quando alguém precisa dele, e uma vez por requisição.
  */
 
+use Toyota\Controllers\Api\AgendamentoApiController;
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Api\ModeloApiController;
 use Toyota\Controllers\Web\AdminController;
 use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
@@ -119,5 +121,13 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(SessaoUsuario::class),
         $c->get(Csrf::class),
         $c->get(Logger::class)
+    ));
+    $c->definir(ModeloApiController::class, static fn (Container $c) => new ModeloApiController(
+        $c->get(ModeloService::class),
+        $c->get(UsuarioAtual::class)
+    ));
+    $c->definir(AgendamentoApiController::class, static fn (Container $c) => new AgendamentoApiController(
+        $c->get(AgendamentoService::class),
+        $c->get(UsuarioAtual::class)
     ));
 };

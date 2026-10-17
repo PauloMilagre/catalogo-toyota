@@ -15,7 +15,9 @@ declare(strict_types=1);
  * A matriz de permissões completa está em docs/arquitetura.md.
  */
 
+use Toyota\Controllers\Api\AgendamentoApiController;
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Api\ModeloApiController;
 use Toyota\Controllers\Web\AdminController;
 use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
@@ -50,4 +52,19 @@ return static function (Router $r): void {
     $r->post('/api/auth/login', [AuthApiController::class, 'login'], ['csrf' => false]);
     $r->post('/api/auth/logout', [AuthApiController::class, 'logout'], ['auth' => true]);
     $r->get('/api/auth/eu', [AuthApiController::class, 'eu'], ['auth' => true]);
+
+    // ----- API: modelos ----------------------------------------------------
+    $r->get('/api/modelos', [ModeloApiController::class, 'listar']);
+    $r->get('/api/modelos/{id}', [ModeloApiController::class, 'mostrar']);
+    $r->post('/api/modelos', [ModeloApiController::class, 'criar'], ['perfil' => 'admin']);
+    $r->put('/api/modelos/{id}', [ModeloApiController::class, 'atualizar'], ['perfil' => 'admin']);
+    $r->delete('/api/modelos/{id}', [ModeloApiController::class, 'excluir'], ['perfil' => 'admin']);
+
+    // ----- API: agendamentos -----------------------------------------------
+    $r->get('/api/agendamentos', [AgendamentoApiController::class, 'listar'], ['auth' => true]);
+    $r->get('/api/agendamentos/{id}', [AgendamentoApiController::class, 'mostrar'], ['auth' => true]);
+    $r->post('/api/agendamentos', [AgendamentoApiController::class, 'criar'], ['auth' => true]);
+    $r->patch('/api/agendamentos/{id}', [AgendamentoApiController::class, 'atualizar'], ['auth' => true]);
+    $r->patch('/api/agendamentos/{id}/status', [AgendamentoApiController::class, 'alterarStatus'], ['auth' => true]);
+    $r->delete('/api/agendamentos/{id}', [AgendamentoApiController::class, 'excluir'], ['perfil' => 'admin']);
 };
