@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Web\AdminController;
 use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
 use Toyota\Controllers\Web\PaginaController;
@@ -38,6 +39,11 @@ return static function (Router $r): void {
     $r->post('/agendar', [AgendamentoController::class, 'criar'], ['auth' => true]);
     $r->get('/meus-agendamentos', [AgendamentoController::class, 'meus'], ['auth' => true]);
     $r->post('/agendamentos/{id}/cancelar', [AgendamentoController::class, 'cancelar'], ['auth' => true]);
+
+    // ----- Administração ---------------------------------------------------
+    $r->get('/admin/agendamentos', [AdminController::class, 'agendamentos'], ['perfil' => 'admin']);
+    $r->post('/admin/agendamentos/{id}/status', [AdminController::class, 'alterarStatus'], ['perfil' => 'admin']);
+    $r->post('/admin/agendamentos/{id}/excluir', [AdminController::class, 'excluir'], ['perfil' => 'admin']);
 
     // ----- API: autenticação -----------------------------------------------
     $r->post('/api/auth/registro', [AuthApiController::class, 'registro'], ['csrf' => false]);

@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Web\AdminController;
 use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
 use Toyota\Controllers\Web\PaginaController;
@@ -102,6 +103,12 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(View::class),
         $c->get(AgendamentoService::class),
         $c->get(ModeloService::class),
+        $c->get(UsuarioAtual::class),
+        $c->get(Avisos::class)
+    ));
+    $c->definir(AdminController::class, static fn (Container $c) => new AdminController(
+        $c->get(View::class),
+        $c->get(AgendamentoService::class),
         $c->get(UsuarioAtual::class),
         $c->get(Avisos::class)
     ));
