@@ -1,13 +1,14 @@
 /* =====================================================================
    Catálogo Toyota — folha de estilo única
-   Trabalho Individual I, SCOM 2026 — Paulo Francisco da Silva
+   Trabalhos Individuais I e II, SCOM 2026 — Paulo Francisco da Silva
 
    Organização do arquivo:
-     1. Variáveis          6. Cards do catálogo
-     2. Base               7. Ficha do modelo
-     3. Utilidades         8. Formulário
-     4. Cabeçalho          9. Rodapé
-     5. Abertura          10. Responsividade
+     1. Variáveis          7. Ficha do modelo
+     2. Base               8. Formulário
+     3. Utilidades         9. Rodapé
+     4. Cabeçalho         10. Responsividade
+     5. Abertura          11. Áreas do sistema (Trabalho II)
+     6. Cards do catálogo
    ===================================================================== */
 
 
@@ -25,6 +26,11 @@
   --tinta-suave: #5A6069;   /* texto secundário  —  5,9:1 sobre papel */
   --marca:       #C8102E;   /* vermelho da marca —  5,8:1 sobre papel */
   --linha:       #D6D8DC;   /* bordas e divisórias */
+
+  /* cores de status (Trabalho II), todas acima de 4,5:1 sobre papel */
+  --ok:          #1E6B34;   /* confirmado, mensagens de sucesso */
+  --atencao:     #8A4B00;   /* pendente */
+  --info:        #1F4E99;   /* realizado */
 
   /* escala de espaçamento: todas as margens do projeto saem daqui,
      o que garante o espaçamento consistente exigido no item A2 */
@@ -436,6 +442,193 @@ a {
 .rodape p:last-child {
   margin-bottom: 0;
   color: var(--linha);
+}
+
+
+/* =====================================================================
+   11. ÁREAS DO SISTEMA (Trabalho II)
+   Login, cadastro, "meus agendamentos" e painel do administrador.
+   Reaproveitam variáveis, campos e botões das seções anteriores.
+   ===================================================================== */
+
+/* Texto só para leitor de tela (legendas de tabela, rótulos de selects) */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.texto-suave {
+  font-size: 0.875rem;
+  color: var(--tinta-suave);
+}
+
+/* "Sair" é um formulário (POST com token CSRF), mas aparece como link do menu */
+.topo__sair {
+  margin: 0;
+}
+
+.topo__sair button {
+  padding: var(--e1) 0;
+  font: inherit;
+  color: var(--papel);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color var(--transicao);
+}
+
+.topo__sair button:hover {
+  border-bottom-color: var(--papel);
+}
+
+.pagina {
+  padding-block: var(--e4) var(--e5);
+}
+
+.formulario__rodape {
+  margin-top: var(--e3);
+}
+
+.alerta {
+  max-width: 48rem;
+  margin: var(--e3) 0 0;
+  padding: var(--e2);
+  background-color: var(--papel);
+  border: 1px solid;
+  border-left-width: 6px;
+  border-radius: var(--raio);
+  font-weight: 600;
+}
+
+.formulario .alerta {
+  margin-bottom: var(--e3);
+}
+
+.alerta--sucesso {
+  color: var(--ok);
+}
+
+.alerta--erro {
+  color: var(--marca);
+}
+
+.campo__erro {
+  display: block;
+  margin-top: var(--e1);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--marca);
+}
+
+.campo [aria-invalid="true"] {
+  border: 2px solid var(--marca);
+}
+
+.tabela-rolagem {
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--papel);
+  border: 1px solid var(--linha);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--e1) var(--e2);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--linha);
+}
+
+.tabela th {
+  font-size: 0.875rem;
+  color: var(--tinta-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tabela__texto {
+  max-width: 20rem;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.125rem var(--e1);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid currentColor;
+  border-radius: var(--raio);
+}
+
+.status--pendente   { color: var(--atencao); }
+.status--confirmado { color: var(--ok); }
+.status--cancelado  { color: var(--tinta-suave); }
+.status--realizado  { color: var(--info); }
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e1);
+  align-items: center;
+  margin: 0 0 var(--e1);
+}
+
+.acoes select {
+  padding: 0.375rem;
+  font: inherit;
+  border: 1px solid var(--tinta-suave);
+  border-radius: var(--raio);
+}
+
+.botao--pequeno {
+  padding: 0.375rem var(--e2);
+  font-size: 0.875rem;
+}
+
+.botao--secundario {
+  color: var(--marca);
+  background-color: var(--papel);
+}
+
+.botao--secundario:hover {
+  color: var(--papel);
+}
+
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2);
+  align-items: flex-end;
+  margin-bottom: var(--e3);
+}
+
+.filtro .campo {
+  margin-bottom: 0;
+}
+
+.paginacao {
+  display: flex;
+  gap: var(--e3);
+  align-items: center;
+  margin-top: var(--e3);
+}
+
+.erro-detalhes {
+  overflow-x: auto;
+  padding: var(--e2);
+  font-size: 0.8125rem;
+  background-color: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
 }
 
 
