@@ -7,7 +7,11 @@ declare(strict_types=1);
  * Cada um é criado só quando alguém precisa dele, e uma vez por requisição.
  */
 
+use Toyota\Controllers\Api\AgendamentoApiController;
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Api\ModeloApiController;
+use Toyota\Controllers\Web\AdminController;
+use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
 use Toyota\Controllers\Web\PaginaController;
 use Toyota\Core\Avisos;
@@ -22,9 +26,11 @@ use Toyota\Core\Sessao;
 use Toyota\Core\Transacao;
 use Toyota\Core\UsuarioAtual;
 use Toyota\Core\View;
+use Toyota\Repositories\AgendamentoRepository;
 use Toyota\Repositories\ModeloRepository;
 use Toyota\Repositories\TentativaLoginRepository;
 use Toyota\Repositories\UsuarioRepository;
+use Toyota\Services\AgendamentoService;
 use Toyota\Services\AuthService;
 use Toyota\Services\ModeloService;
 use Toyota\Services\SessaoUsuario;
@@ -56,6 +62,7 @@ return static function (Container $c, Config $config, string $raiz): void {
     // Acesso a dados
     $c->definir(UsuarioRepository::class, static fn (Container $c) => new UsuarioRepository($c->get(PDO::class)));
     $c->definir(ModeloRepository::class, static fn (Container $c) => new ModeloRepository($c->get(PDO::class)));
+    $c->definir(AgendamentoRepository::class, static fn (Container $c) => new AgendamentoRepository($c->get(PDO::class)));
     $c->definir(TentativaLoginRepository::class, static fn (Container $c) => new TentativaLoginRepository($c->get(PDO::class)));
 
     // Regras de negócio
@@ -74,6 +81,13 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(ModeloRepository::class),
         $c->get(Logger::class)
     ));
+    $c->definir(AgendamentoService::class, static fn (Container $c) => new AgendamentoService(
+        $c->get(AgendamentoRepository::class),
+        $c->get(ModeloRepository::class),
+        $c->get(Transacao::class),
+        $c->get(Relogio::class),
+        $c->get(Logger::class)
+    ));
 
     // Controllers das páginas
     $c->definir(PaginaController::class, static fn (Container $c) => new PaginaController(
@@ -87,6 +101,19 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(Avisos::class),
         $c->get(Logger::class)
     ));
+    $c->definir(AgendamentoController::class, static fn (Container $c) => new AgendamentoController(
+        $c->get(View::class),
+        $c->get(AgendamentoService::class),
+        $c->get(ModeloService::class),
+        $c->get(UsuarioAtual::class),
+        $c->get(Avisos::class)
+    ));
+    $c->definir(AdminController::class, static fn (Container $c) => new AdminController(
+        $c->get(View::class),
+        $c->get(AgendamentoService::class),
+        $c->get(UsuarioAtual::class),
+        $c->get(Avisos::class)
+    ));
 
     // Controllers da API
     $c->definir(AuthApiController::class, static fn (Container $c) => new AuthApiController(
@@ -94,5 +121,13 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(SessaoUsuario::class),
         $c->get(Csrf::class),
         $c->get(Logger::class)
+    ));
+    $c->definir(ModeloApiController::class, static fn (Container $c) => new ModeloApiController(
+        $c->get(ModeloService::class),
+        $c->get(UsuarioAtual::class)
+    ));
+    $c->definir(AgendamentoApiController::class, static fn (Container $c) => new AgendamentoApiController(
+        $c->get(AgendamentoService::class),
+        $c->get(UsuarioAtual::class)
     ));
 };
