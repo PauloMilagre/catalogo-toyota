@@ -1,0 +1,6 @@
+# Arquivos que existem (CSS, imagens) são servidos direto.
+# Todo o resto vai para o index.php, que decide pela rota.
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
