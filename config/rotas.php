@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 
 use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Web\AgendamentoController;
 use Toyota\Controllers\Web\AuthController;
 use Toyota\Controllers\Web\PaginaController;
 use Toyota\Core\Router;
@@ -31,6 +32,12 @@ return static function (Router $r): void {
     $r->get('/cadastro', [AuthController::class, 'formularioCadastro']);
     $r->post('/cadastro', [AuthController::class, 'cadastrar']);
     $r->post('/sair', [AuthController::class, 'sair'], ['auth' => true]);
+
+    // ----- Agendamentos do cliente -----------------------------------------
+    $r->get('/agendar', [AgendamentoController::class, 'formulario'], ['auth' => true]);
+    $r->post('/agendar', [AgendamentoController::class, 'criar'], ['auth' => true]);
+    $r->get('/meus-agendamentos', [AgendamentoController::class, 'meus'], ['auth' => true]);
+    $r->post('/agendamentos/{id}/cancelar', [AgendamentoController::class, 'cancelar'], ['auth' => true]);
 
     // ----- API: autenticação -----------------------------------------------
     $r->post('/api/auth/registro', [AuthApiController::class, 'registro'], ['csrf' => false]);

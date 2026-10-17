@@ -31,7 +31,9 @@ $descricao ??= 'Catálogo de modelos Toyota com ficha técnica, preço e agendam
     <nav class="topo__nav" aria-label="Navegação principal">
       <ul class="topo__lista">
         <li><a href="<?= $this->e($this->url('/')) ?>"<?= $this->atual('/') ?: $this->atual('/modelos') ?>>Catálogo</a></li>
+        <li><a href="<?= $this->e($this->url('/agendar')) ?>"<?= $this->atual('/agendar') ?>>Agendar test-drive</a></li>
         <?php if ($usuarioAtual !== null): ?>
+          <li><a href="<?= $this->e($this->url('/meus-agendamentos')) ?>"<?= $this->atual('/meus-agendamentos') ?>>Meus agendamentos</a></li>
           <li>
             <form class="topo__sair" method="post" action="<?= $this->e($this->url('/sair')) ?>">
               <?= $this->campoCsrf() ?>
