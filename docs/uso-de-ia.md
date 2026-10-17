@@ -1,6 +1,6 @@
 # Registro de uso de IA generativa
 
-Documento mantido durante o desenvolvimento do Trabalho Individual I, conforme
+Documento mantido durante o desenvolvimento dos Trabalhos Individuais I e II, conforme
 exige o enunciado: para cada uso, registra-se a ferramenta, a finalidade, o
 trecho produzido, as modificações realizadas e a avaliação crítica da sugestão.
 
@@ -208,7 +208,7 @@ oficial da fabricante.
 **Modificações realizadas:**
 Coloquei os dois arquivos na raiz do projeto, troquei os links dos cards da Hilux e do Supra no index.html, e ajustei o seletor do CSS que ainda estava com ="page". Validei as duas páginas no W3C e revalidei o CSS.
 
-**Avaliação crítica:** [Notei o problema clicando na ficha da Hilux e vendo aparecer o Corolla. Vi na hora que estava completamente errado e que tinha que resolver o quanto antes.]
+**Avaliação crítica:** Notei o problema clicando na ficha da Hilux e vendo aparecer o Corolla. Vi na hora que estava completamente errado e que tinha que resolver o quanto antes.
 
 ---
 
@@ -226,4 +226,130 @@ foram deixados em branco para preenchimento pelo estudante.
 **Modificações realizadas:** 
 Escrevi os três blocos que estavam em branco: a avaliação crítica do uso de IA, o acréscimo em trabalhos futuros e o parágrafo final das conclusões. Ajustei a redação de alguns trechos
 
-**Avaliação crítica:** [Nos campos deixados em branco eu apresentei as minhas contribuições e a minha análise sobre o desenvolvimento do projeto.]
+**Avaliação crítica:** Nos campos deixados em branco eu apresentei as minhas contribuições e a minha análise sobre o desenvolvimento do projeto.
+
+---
+
+# Trabalho Individual II
+
+**Ferramenta utilizada:** Claude (Anthropic), no aplicativo Claude para
+desktop (modo Cowork), com acesso concedido pelo estudante à pasta do
+repositório no computador dele.
+
+## Nota sobre a extensão do uso no Trabalho II
+
+A ferramenta escreveu todo o código do backend, os testes automatizados, os
+scripts de `bin/`, as migrações do banco, a documentação de `docs/` e o
+rascunho do relatório técnico. Os arquivos foram gravados diretamente na
+pasta do repositório. As mensagens de commit e a divisão em branches e tags
+também foram sugeridas por ela; os comandos `git` foram executados pelo
+estudante.
+
+As evidências de `docs/evidencias/` (resultado dos testes, capturas de tela,
+medições de desempenho, amostra de logs) foram produzidas pela ferramenta,
+num ambiente próprio dela: Linux, Apache 2.4, PHP 8.3 e 8.4, MariaDB 10.11 e
+PHPUnit 9.6. A execução no computador do estudante (Windows, XAMPP com PHP
+8.2 e MariaDB) foi feita por ele, e é a que aparece no vídeo.
+
+O estudante decidiu a tecnologia (PHP e MySQL no XAMPP), aceitou a proposta
+de escopo (agendamento como entidade principal, perfis cliente e
+administrador), executou o sistema e os testes no próprio computador, fez os
+commits, gravou o vídeo e revisou o material.
+
+> Os campos "modificações realizadas" e "avaliação crítica" abaixo devem ser
+> preenchidos pelo estudante, com suas próprias palavras.
+
+---
+
+## Registro 11 — 16/10/2026 — Análise do enunciado e escopo do backend
+
+**Finalidade:** entender o que o Trabalho II exige e definir um backend
+coerente com o catálogo do Trabalho I, dentro do prazo de 20/10.
+
+**Trecho produzido:** leitura dos dez requisitos obrigatórios e das métricas
+de avaliação; proposta de tornar o agendamento de test-drive a entidade
+principal (o formulário `agendar.html` passaria a gravar de verdade), com
+modelos e usuários como entidades de apoio; proposta de dois perfis
+(cliente e administrador); recomendação de PHP com MySQL no XAMPP, já
+instalado; e a lista das cinco boas práticas opcionais que seriam feitas
+(`.env`, migrações, paginação, limite de tentativas e testes de integração).
+
+**Modificações realizadas:** [preencher]
+
+**Avaliação crítica:** [preencher]
+
+---
+
+## Registro 12 — 16/10/2026 — Backend: estrutura, banco, autenticação e agendamentos
+
+**Finalidade:** implementar o backend completo.
+
+**Trecho produzido:** reorganização do projeto em `public/` (única pasta
+exposta), `src/` (camadas Core, Repositories, Services, Controllers e Views)
+e `config/`; cinco migrações SQL e o `database/schema.sql`; roteador com
+regras de acesso por rota; sessão segura, CSRF, validação e sanitização,
+tratamento centralizado de erros e logs; cadastro, login com limite de
+tentativas e logout; CRUD de agendamentos e de modelos, nas páginas e na API
+JSON; conversão das páginas `.html` do Trabalho I em templates PHP; seção 11
+da folha de estilo; scripts `bin/migrar.php` e `bin/criar-admin.php`.
+
+**Erros e correções da própria ferramenta neste uso:**
+
+- Ao gravar a constante `HASH_FICTICIO` do `AuthService` por um script de
+  substituição, o trecho `$2y$12$` foi interpretado como referência de
+  expressão regular e o valor ficou corrompido. Foi percebido na conferência
+  do arquivo e corrigido antes de qualquer teste.
+- O formulário de agendamento mostrava o erro de data (domingo, data
+  passada) só depois que os outros campos estivessem certos. Um teste de
+  integração falhou por isso, e a validação passou a juntar todos os erros
+  numa resposta só.
+- A motorização do Corolla, escrita como "2.0 híbrido" no Trabalho I, foi
+  corrigida para 1.8 nos dados iniciais do banco (migração 005).
+
+**Modificações realizadas:** [preencher]
+
+**Avaliação crítica:** [preencher]
+
+---
+
+## Registro 13 — 16/10/2026 — Testes, segurança e desempenho
+
+**Finalidade:** cumprir os requisitos de testes automatizados, testes de
+segurança documentados e medição de desempenho.
+
+**Trecho produzido:** 82 testes PHPUnit (39 unitários e 43 de integração,
+14 deles de segurança); o script `bin/testes-seguranca.sh`, com 20
+verificações contra o site rodando; capturas de tela dos fluxos e dos
+ataques; medição com Apache Bench e `EXPLAIN` das consultas;
+`docs/testes.md`.
+
+**Erros da própria ferramenta neste uso:** o script que tirou as capturas de
+tela usava seletores que pegavam o primeiro elemento da página, que era o
+formulário "Sair" do menu. Com isso, uma captura saiu da tela errada e a do
+teste de CSRF mostrou um agendamento criado em vez do erro 403 (o token
+removido foi o do "Sair", não o do agendamento). A falha era do script de
+captura, não do sistema; os seletores foram restritos ao conteúdo da página e
+todas as capturas foram refeitas.
+
+**Observação da ferramenta sobre o resultado:** a medição mostrou que
+pedidos simultâneos da mesma sessão ficam em fila (trava do arquivo de
+sessão do PHP). Isso foi registrado como limitação em vez de ser escondido.
+
+**Modificações realizadas:** [preencher]
+
+**Avaliação crítica:** [preencher]
+
+---
+
+## Registro 14 — 16/10/2026 — Documentação e relatório técnico
+
+**Finalidade:** produzir a documentação exigida e o relatório em PDF.
+
+**Trecho produzido:** `README.md`, `docs/arquitetura.md` (com a matriz de
+permissões), `docs/modelo-de-dados.md`, `docs/api.md`,
+`docs/checklist-requisitos.md`, a parte do Trabalho II deste registro e o
+relatório técnico com as quatorze seções e os anexos de evidências.
+
+**Modificações realizadas:** [preencher]
+
+**Avaliação crítica:** [preencher]
