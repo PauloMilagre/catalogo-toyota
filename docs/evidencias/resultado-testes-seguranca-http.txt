@@ -1,0 +1,40 @@
+$ bash bin/testes-seguranca.sh http://127.0.0.1:8080/catalogo-toyota
+
+Testes de segurança em http://127.0.0.1:8080/catalogo-toyota
+Data: 2026-10-16 15:49:49
+
+== 1. Acesso sem login
+  [OK]    GET /api/agendamentos sem sessão -> HTTP 401
+  [OK]    GET /meus-agendamentos sem sessão (vai para o login) -> HTTP 303
+
+== Preparação: conta de cliente seguranca-267351104@teste.com
+  [OK]    cadastro -> HTTP 201
+  [OK]    login -> HTTP 200
+
+== 2. SQL Injection
+  [OK]    e-mail "' OR '1'='1' -- " no login -> HTTP 422
+  [OK]    senha "' OR '1'='1" no login -> HTTP 401
+  [OK]    id "1 OR 1=1" na URL -> HTTP 404
+  [OK]    filtro status="pendente' OR '1'='1" -> HTTP 422
+
+== 3. XSS refletido
+  [OK]    cadastro com nome <script>alert("xss")</script> -> HTTP 422
+  [OK]    a página devolveu o texto escapado: &lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;
+
+== 4. CSRF
+  [OK]    POST /api/agendamentos sem X-CSRF-Token -> HTTP 403
+  [OK]    formulário /agendar sem o campo _csrf -> HTTP 403
+  [OK]    formulário /agendar com token de OUTRA sessão -> HTTP 403
+
+== 5. Perfil insuficiente (cliente tentando área de administrador)
+  [OK]    GET /admin/agendamentos -> HTTP 403
+  [OK]    POST /api/modelos -> HTTP 403
+  [OK]    DELETE /api/modelos/1 -> HTTP 403
+
+== 6. Sessão reutilizada depois do logout
+  [OK]    antes do logout, a sessão vale -> HTTP 200
+  [OK]    logout -> HTTP 204
+  [OK]    mesmo cookie de antes do logout -> HTTP 401
+  [OK]    cookie e token antigos juntos -> HTTP 401
+
+Resultado: todos os ataques foram barrados.

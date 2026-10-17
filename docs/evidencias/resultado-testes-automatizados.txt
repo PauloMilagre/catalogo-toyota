@@ -1,0 +1,107 @@
+$ php vendor/bin/phpunit   (ambiente de desenvolvimento: PHP 8.3.6, MariaDB 10.11)
+
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Csrf (Toyota\Testes\Unitarios\Csrf)
+ ✔ Token tem 64 caracteres e eh estavel na mesma sessao
+ ✔ Token correto eh aceito
+ ✔ Token ausente errado ou de outro tipo eh recusado
+ ✔ Token de outra sessao eh recusado
+ ✔ Renovar invalida o token antigo
+
+Infraestrutura (Toyota\Testes\Unitarios\Infraestrutura)
+ ✔ Paginacao calcula deslocamento e total de paginas
+ ✔ Paginacao recusa por pagina acima do limite
+ ✔ Descobre a pasta do site no servidor embutido e no xampp
+ ✔ Migrador separa comandos e ignora comentarios
+ ✔ Erro interno na api nao mostra detalhes em producao mas registra no log
+ ✔ Erro interno mostra detalhes so em desenvolvimento
+ ✔ Erro de validacao na api traz os campos
+ ✔ Pagina sem permissao mostra pagina de erro com mesmo codigo
+
+Regras Agendamento (Toyota\Testes\Unitarios\RegrasAgendamento)
+ ✔ Amanha eh aceito
+ ✔ Hoje e datas passadas sao recusadas
+ ✔ Domingo eh recusado
+ ✔ Limite de sessenta dias
+ ✔ Cliente so pode cancelar
+ ✔ Administrador conduz o fluxo
+ ✔ Status finais nao mudam mais
+ ✔ Perfil desconhecido nao muda nada
+ ✔ Cancelamento pelo cliente vai ate a vespera
+ ✔ Terceiro agendamento lota o periodo
+
+Router (Toyota\Testes\Unitarios\Router)
+ ✔ Resolve rota e extrai parametros
+ ✔ Url inexistente da 404
+ ✔ Metodo nao permitido da 405 com cabecalho allow
+ ✔ Parametro fora do formato nao casa
+ ✔ Regras de acesso padrao das rotas
+
+Validador (Toyota\Testes\Unitarios\Validador)
+ ✔ Aceita dados validos e limpa espacos das pontas
+ ✔ Campo obrigatorio ausente ou so com espacos eh recusado
+ ✔ Recusa tipos errados
+ ✔ Respeita tamanho minimo e maximo
+ ✔ Tamanho conta caracteres e nao bytes
+ ✔ Email invalido eh recusado e valido fica minusculo
+ ✔ Data inexistente ou em outro formato eh recusada
+ ✔ Campos nao declarados sao descartados
+ ✔ Remove caracteres de controle e padroniza quebras de linha
+ ✔ Campo opcional vazio vira null
+ ✔ Senha sem numero eh recusada
+
+Agendamento (Toyota\Testes\Integracao\Agendamento)
+ ✔ Cliente cria agendamento
+ ✔ Data passada domingo e modelo inexistente dao 422
+ ✔ Mesmo cliente no mesmo horario da 409
+ ✔ Quarto agendamento do mesmo modelo no periodo da 409
+ ✔ Cliente nao ve nem cancela agendamento de outro
+ ✔ Cliente cancela o proprio mas nao confirma
+ ✔ Administrador confirma e marca como realizado
+ ✔ Remarcar altera so os campos enviados
+ ✔ Listagem paginada e filtro por status
+ ✔ So administrador exclui
+ ✔ Formulario do site cria agendamento e redireciona
+ ✔ Formulario com erro mostra mensagens e mantem o que foi digitado
+
+Autenticacao (Toyota\Testes\Integracao\Autenticacao)
+ ✔ Cadastro cria cliente e guarda so o hash da senha
+ ✔ Cadastro ignora perfil enviado pelo cliente
+ ✔ Cadastro com email repetido da 409
+ ✔ Cadastro com dados invalidos da 422 com mensagem por campo
+ ✔ Login correto troca a sessao e devolve token csrf
+ ✔ Login com senha errada da 401 e registra a falha
+ ✔ Email inexistente da a mesma mensagem que senha errada
+ ✔ Sexta tentativa errada seguida eh bloqueada com 429
+ ✔ Logout encerra a sessao
+ ✔ Login pelo site redireciona e mantem destino interno
+ ✔ Destino externo apos login eh ignorado
+
+Modelo (Toyota\Testes\Integracao\Modelo)
+ ✔ Catalogo e sua api mostram os modelos ativos
+ ✔ Ficha do modelo vem do banco
+ ✔ Administrador cria atualiza e exclui modelo
+ ✔ Slug repetido da 409
+ ✔ Dados invalidos do modelo dao 422
+ ✔ Modelo com agendamento nao pode ser excluido
+
+Seguranca (Toyota\Testes\Integracao\Seguranca)
+ ✔ Sql injection no login nao autentica
+ ✔ Sql injection na url e no filtro nao altera nem vaza dados
+ ✔ Xss refletido no formulario de cadastro eh neutralizado
+ ✔ Xss refletido no parametro da url eh neutralizado
+ ✔ Xss gravado nas observacoes eh neutralizado no painel do admin
+ ✔ Formulario sem token csrf eh recusado
+ ✔ Api sem cabecalho csrf eh recusada
+ ✔ Rotas protegidas sem login
+ ✔ Cliente nao acessa area do administrador
+ ✔ Perfil retirado vale na hora
+ ✔ Sessao encerrada nao pode ser reutilizada
+ ✔ Sessao parada por mais de trinta minutos expira
+ ✔ Respostas levam cabecalhos de seguranca
+ ✔ Api recusa corpo que nao seja json
+
+Time: 00:22.143, Memory: 8.00 MB
+
+OK (82 tests, 302 assertions)

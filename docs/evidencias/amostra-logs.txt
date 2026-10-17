@@ -1,0 +1,13 @@
+[2026-10-16T15:50:05-03:00] INFO usuario.criado {"usuario_id":69,"perfil":"cliente"}
+[2026-10-16T15:50:06-03:00] WARNING login.falha {"email":"maria@exemplo.com","ip":"127.0.0.1"}
+[2026-10-16T15:50:06-03:00] INFO login.sucesso {"usuario_id":69,"ip":"127.0.0.1"}
+[2026-10-16T15:50:06-03:00] INFO agendamento.criado {"agendamento_id":4099,"usuario_id":69,"modelo_id":2,"data":"2026-10-21","periodo":"manha"}
+[2026-10-16T15:50:06-03:00] WARNING csrf.invalido {"caminho":"/api/agendamentos","ip":"127.0.0.1"}
+[2026-10-16T15:50:06-03:00] WARNING acesso.negado {"usuario_id":69,"perfil":"cliente","caminho":"/admin/agendamentos"}
+[2026-10-16T15:50:06-03:00] INFO logout {"usuario_id":69}
+[2026-10-16T15:50:06-03:00] INFO login.sucesso {"usuario_id":2,"ip":"127.0.0.1"}
+[2026-10-16T15:50:06-03:00] INFO agendamento.atualizado {"agendamento_id":4099,"por":2}
+[2026-10-16T15:50:06-03:00] INFO agendamento.status {"agendamento_id":4099,"de":"pendente","para":"confirmado","por":2}
+[2026-10-16T15:50:06-03:00] INFO modelo.criado {"modelo_id":4,"slug":"corolla-cross","por":2}
+[2026-10-16T15:50:09-03:00] ERROR erro.interno {"tipo":"PDOException","mensagem":"SQLSTATE[HY000] [2002] Connection refused","arquivo":"/var/www/catalogo-toyota/src/Core/Database.php:33","metodo":"GET","caminho":"/api/modelos"}
+[2026-10-16T15:50:09-03:00] ERROR erro.interno {"tipo":"PDOException","mensagem":"SQLSTATE[HY000] [2002] Connection refused","arquivo":"/var/www/catalogo-toyota/src/Core/Database.php:33","metodo":"GET","caminho":"/"}
