@@ -7,6 +7,8 @@ declare(strict_types=1);
  * Cada um é criado só quando alguém precisa dele, e uma vez por requisição.
  */
 
+use Toyota\Controllers\Api\AuthApiController;
+use Toyota\Controllers\Web\AuthController;
 use Toyota\Controllers\Web\PaginaController;
 use Toyota\Core\Avisos;
 use Toyota\Core\Config;
@@ -21,7 +23,9 @@ use Toyota\Core\Transacao;
 use Toyota\Core\UsuarioAtual;
 use Toyota\Core\View;
 use Toyota\Repositories\ModeloRepository;
+use Toyota\Repositories\TentativaLoginRepository;
 use Toyota\Repositories\UsuarioRepository;
+use Toyota\Services\AuthService;
 use Toyota\Services\ModeloService;
 use Toyota\Services\SessaoUsuario;
 
@@ -52,6 +56,7 @@ return static function (Container $c, Config $config, string $raiz): void {
     // Acesso a dados
     $c->definir(UsuarioRepository::class, static fn (Container $c) => new UsuarioRepository($c->get(PDO::class)));
     $c->definir(ModeloRepository::class, static fn (Container $c) => new ModeloRepository($c->get(PDO::class)));
+    $c->definir(TentativaLoginRepository::class, static fn (Container $c) => new TentativaLoginRepository($c->get(PDO::class)));
 
     // Regras de negócio
     $c->definir(SessaoUsuario::class, static fn (Container $c) => new SessaoUsuario(
@@ -60,6 +65,11 @@ return static function (Container $c, Config $config, string $raiz): void {
         $c->get(Csrf::class)
     ));
     $c->definir(UsuarioAtual::class, static fn (Container $c) => $c->get(SessaoUsuario::class));
+    $c->definir(AuthService::class, static fn (Container $c) => new AuthService(
+        $c->get(UsuarioRepository::class),
+        $c->get(TentativaLoginRepository::class),
+        $c->get(Logger::class)
+    ));
     $c->definir(ModeloService::class, static fn (Container $c) => new ModeloService(
         $c->get(ModeloRepository::class),
         $c->get(Logger::class)
@@ -69,5 +79,20 @@ return static function (Container $c, Config $config, string $raiz): void {
     $c->definir(PaginaController::class, static fn (Container $c) => new PaginaController(
         $c->get(View::class),
         $c->get(ModeloService::class)
+    ));
+    $c->definir(AuthController::class, static fn (Container $c) => new AuthController(
+        $c->get(View::class),
+        $c->get(AuthService::class),
+        $c->get(SessaoUsuario::class),
+        $c->get(Avisos::class),
+        $c->get(Logger::class)
+    ));
+
+    // Controllers da API
+    $c->definir(AuthApiController::class, static fn (Container $c) => new AuthApiController(
+        $c->get(AuthService::class),
+        $c->get(SessaoUsuario::class),
+        $c->get(Csrf::class),
+        $c->get(Logger::class)
     ));
 };
