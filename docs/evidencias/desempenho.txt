@@ -1,0 +1,50 @@
+Apache 2.4 + PHP 8.3 (mod_php) + MariaDB 10.11, mesma máquina. 500 requisições, 10 simultâneas (ab).
+Banco com 3003 agendamentos e 53 usuários.
+
+GET /  (catálogo, HTML)                      req/s=1868.75  p50=5ms p95=8ms p99=10ms falhas=0 non2xx=0
+GET /modelos/gr-supra  (ficha, HTML)          req/s=2005.03  p50=5ms p95=8ms p99=10ms falhas=0 non2xx=0
+GET /api/modelos  (JSON, público)            req/s=1492.83  p50=6ms p95=10ms p99=12ms falhas=0 non2xx=0
+GET /api/agendamentos  (JSON, admin, 3003)    req/s=122.37   p50=78ms p95=96ms p99=129ms falhas=0 non2xx=0
+GET /api/agendamentos?status=pendente         req/s=270.43   p50=35ms p95=49ms p99=53ms falhas=0 non2xx=0
+GET /css/estilo.css  (arquivo estático)      req/s=16403.12 p50=1ms p95=1ms p99=2ms falhas=0 non2xx=0
+
+Login (bcrypt custo 12), 20 requisições sequenciais:
+Requests per second:    4.04 [#/sec] (mean)
+Time per request:       247.705 [ms] (mean)
+
+Mesma listagem de agendamentos (admin, 50 por página) com 1 cliente por vez:
+  Time per request: 8.701 ms (média de 200)
+
+Leitura: com 10 requisições simultâneas da MESMA sessão, o PHP enfileira as
+requisições (trava do arquivo de sessão), por isso o p50 sobe para ~78 ms.
+Sessões diferentes não disputam essa trava.
+
+EXPLAIN 1 - listagem 'meus agendamentos' (usuario_id = 10)
++------+-------------+-------+--------+--------------------------------------------------------+-------------------------------+---------+-----------------------------+------+-----------------------------+
+| id   | select_type | table | type   | possible_keys                                          | key                           | key_len | ref                         | rows | Extra                       |
++------+-------------+-------+--------+--------------------------------------------------------+-------------------------------+---------+-----------------------------+------+-----------------------------+
+|    1 | SIMPLE      | u     | const  | PRIMARY                                                | PRIMARY                       | 4       | const                       | 1    | Using index                 |
+|    1 | SIMPLE      | a     | ref    | idx_agendamentos_usuario_data,idx_agendamentos_horario | idx_agendamentos_usuario_data | 4       | const                       | 60   | Using where; Using filesort |
+|    1 | SIMPLE      | m     | eq_ref | PRIMARY                                                | PRIMARY                       | 4       | catalogo_toyota.a.modelo_id | 1    | Using index                 |
++------+-------------+-------+--------+--------------------------------------------------------+-------------------------------+---------+-----------------------------+------+-----------------------------+
+
+EXPLAIN 2 - conferência de vagas no horário
++------+-------------+--------------+-------+---------------------------------------------------------------+--------------------------+---------+------+------+--------------------------+
+| id   | select_type | table        | type  | possible_keys                                                 | key                      | key_len | ref  | rows | Extra                    |
++------+-------------+--------------+-------+---------------------------------------------------------------+--------------------------+---------+------+------+--------------------------+
+|    1 | SIMPLE      | agendamentos | range | PRIMARY,idx_agendamentos_horario,idx_agendamentos_status_data | idx_agendamentos_horario | 9       | NULL | 2    | Using where; Using index |
++------+-------------+--------------+-------+---------------------------------------------------------------+--------------------------+---------+------+------+--------------------------+
+
+EXPLAIN 3 - painel do administrador filtrado por status
++------+-------------+-------+------+------------------------------+------------------------------+---------+-------+------+--------------------------+
+| id   | select_type | table | type | possible_keys                | key                          | key_len | ref   | rows | Extra                    |
++------+-------------+-------+------+------------------------------+------------------------------+---------+-------+------+--------------------------+
+|    1 | SIMPLE      | a     | ref  | idx_agendamentos_status_data | idx_agendamentos_status_data | 1       | const | 752  | Using where; Using index |
++------+-------------+-------+------+------------------------------+------------------------------+---------+-------+------+--------------------------+
+
+EXPLAIN 4 - login (busca por e-mail)
++------+-------------+----------+-------+-------------------+-------------------+---------+-------+------+-------------+
+| id   | select_type | table    | type  | possible_keys     | key               | key_len | ref   | rows | Extra       |
++------+-------------+----------+-------+-------------------+-------------------+---------+-------+------+-------------+
+|    1 | SIMPLE      | usuarios | const | uq_usuarios_email | uq_usuarios_email | 602     | const | 1    | Using index |
++------+-------------+----------+-------+-------------------+-------------------+---------+-------+------+-------------+

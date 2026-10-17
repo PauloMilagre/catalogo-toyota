@@ -1,0 +1,6 @@
+Validação W3C (Nu Html Checker, vnu.jar) das páginas geradas pelo backend.
+Páginas: catálogo, ficha do modelo, entrar, cadastro, cadastro com erro, agendar,
+agendar com erros de validação, meus agendamentos, painel do administrador, erro 404.
+
+$ java -jar vnu.jar --format text html/*.html
+Document checking completed. No errors found.

@@ -1,0 +1,27 @@
+Banco de dados desligado de propósito para provocar um erro interno (500).
+
+1) APP_ENV=desenvolvimento, APP_DEBUG=true
+$ curl -i http://127.0.0.1:8080/catalogo-toyota/api/modelos
+HTTP/1.1 500 Internal Server Error
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: same-origin
+Content-Security-Policy: default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'
+Content-Length: 1131
+Content-Type: application/json; charset=utf-8
+
+{"erro":{"status":500,"mensagem":"Erro interno do servidor. Tente novamente mais tarde.","detalhes":{"tipo":"PDOException","mensagem":"SQLSTATE[HY000] [2002] Connection refused","arquivo":"/var/www/catalogo-toyota/src/Core/Database.php:33","pilha":["#0 /var/www/catalogo-toyota/src/Core/Database.php(33): PDO->__construct()","#1 /var/www/catalogo-toyota/config/servicos.php(40): Toyota\\Core\\Database::conectar()","#2 /var/www/catalogo-toyota/src/Core/Container.php(42): Toyota\\Core\\Fabrica::{closure}()","#3 /var/www/catalogo-toyota/config/servicos.php(63): Toyota\\Core\\Container->get()","#4 /var/www/catalogo-toyota/src/Core/Container.php(42): Toyota\\Core\\Fabrica::{closure}()","#5 /var/www/catalogo-toyota/config/servicos.php(71): Toyota\\Core\\Container->get()","#6 /var/www/catalogo-toyota/src/Core/Container.php(42): Toyota\\Core\\Fabrica::{closure}()","#7 /var/www/catalogo-toyota/config/servicos.php(74): Toyota\\Core\\Container->get()","#8 /var/www/catalogo-toyota/src/Core/Container.php(42): Toyota\\Core\\Fabrica::{closure}()","#9 /var/www/catalogo-toyota/src/Core/App.php(43): Toyota\\Core\\Container->get()"]}}}
+
+
+2) APP_ENV=producao, APP_DEBUG=false
+$ curl -i http://127.0.0.1:8080/catalogo-toyota/api/modelos
+HTTP/1.1 500 Internal Server Error
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: same-origin
+Content-Security-Policy: default-src 'self'; img-src 'self'; style-src 'self'; script-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'
+Content-Length: 90
+Content-Type: application/json; charset=utf-8
+
+{"erro":{"status":500,"mensagem":"Erro interno do servidor. Tente novamente mais tarde."}}
+
