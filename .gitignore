@@ -1,0 +1,21 @@
+# Configuração local com senhas
+.env
+
+# Logs gerados pela aplicação
+logs/*.log
+
+# Dependências e ferramentas baixadas
+vendor/
+tools/
+.phpunit.cache/
+.phpunit.result.cache
+
+# Arquivos do sistema e de editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.swp
+
+# Relatórios em PDF ficam fora do repositório (entregues no Classroom)
+*.pdf

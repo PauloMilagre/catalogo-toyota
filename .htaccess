@@ -1,0 +1,10 @@
+# Para quem abre o projeto pelo XAMPP (http://localhost/catalogo-toyota/):
+# só a pasta public/ é acessível pelo navegador. Código, .env, logs e
+# banco ficam fora do alcance, mesmo que alguém digite o caminho.
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !/public/
+RewriteRule ^(.*)$ public/$1 [L]
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
