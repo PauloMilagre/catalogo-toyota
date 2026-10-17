@@ -1,0 +1,49 @@
+*   9d97fb2 (HEAD -> main) merge: documentacao e evidencias do trabalho 2
+|\  
+| * b114405 (docs/trabalho2) docs: registro de uso de ia do trabalho 2
+| * 6cfe2d0 docs: estrategia de testes, desempenho, checklist e evidencias
+| * 3992ef9 docs: documentacao completa da api
+| * 7eb67e9 docs: readme, arquitetura com matriz de permissoes e modelo de dados
+|/  
+*   60b3099 merge: testes automatizados e de seguranca
+|\  
+| * 806a802 (feature/testes) test: script de testes de seguranca contra o site rodando
+| * 94426a2 test: testes de integracao da api, das paginas e de seguranca
+| * 05ff8ac test: testes unitarios de validacao, regras de agendamento, rotas, csrf e erros
+|/  
+*   efc5d0d (tag: v2.0-beta) merge: agendamento de test-drive, painel do administrador e api
+|\  
+| * 0c4c227 (feature/agendamentos) feat: api json de modelos e agendamentos
+| * 57e2764 feat: painel do administrador com filtro por status e paginacao
+| * b7fd15d feat: agendamento de test-drive com regras de data, vagas e status
+|/  
+*   9234e34 merge: cadastro, login, logout e perfis
+|\  
+| * 6c75c26 (feature/autenticacao) feat: script para criar administrador sem senha gravada no codigo
+| * 2405497 feat: cadastro, login e logout com sessao segura, csrf e limite de tentativas
+|/  
+*   0ca5eb1 merge: estrutura do backend, banco e catalogo dinamico
+|\  
+| * dab9bae (feature/estrutura-backend) refactor: catalogo e fichas dos modelos montados a partir do banco
+| * ba1c19f feat: migracoes e script de criacao do banco
+| * aac1163 feat: nucleo da aplicacao com rotas, requisicao, resposta, sessao, validacao, erros e logs
+| * 0568f40 chore: configuracao por .env, gitignore e composer
+| * 7734bb7 refactor: organiza os documentos do trabalho 1 em docs/trabalho1
+|/  
+* 1dd1276 (tag: v1.0, origin/main, origin/HEAD) feat: fichas da hilux e do supra e ajustes finais
+* c0a5490 docs: validacao w3c, compatibilidade e checklist
+* cb6f80d fix: opcao vazia no select de periodo
+* 759ad55 docs: registro de uso de IA da revisao de acessibilidade
+* 3da7636 docs: relatorios lighthouse mobile das tres paginas
+* 601c949 fix: acessibilidade, favicon e prioridade da imagem principal
+* af86384 capturas dos tres breakpoints
+* 965d7e9 style: limita a largura da ficha tecnica
+* 43ab0ad feat: adiciona paginas de ficha do modelo e agendamento
+* 2c0883f feat: adiciona folha de estilo com variaveis, grid e foco visivel
+* fa241d7 fix: corrige descricao da imagem do Supra
+* 725399d chore: adiciona imagens otimizadas e corrige textos alternativos
+* 9e45439 feat: adiciona estrutura semantica da pagina de catalogo
+* 58efc02 docs: adiciona artefatos de processo e registro de uso de IA
+* fe16d53 docs: corrige nome do autor no README
+* 1e8a88e docs: adiciona README com instruções de execução
+* d91e7f2 Initial commit
