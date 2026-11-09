@@ -243,21 +243,22 @@ scripts de `bin/`, as migrações do banco, a documentação de `docs/` e o
 rascunho do relatório técnico. Os arquivos foram gravados diretamente na
 pasta do repositório. As mensagens de commit e a divisão em branches e tags
 também foram sugeridas por ela; os comandos `git` foram executados pelo
-estudante.
+estudante, por meio de um script preparado pela ferramenta (`aplicar.sh`, que
+não faz parte do repositório).
 
 As evidências de `docs/evidencias/` (resultado dos testes, capturas de tela,
 medições de desempenho, amostra de logs) foram produzidas pela ferramenta,
 num ambiente próprio dela: Linux, Apache 2.4, PHP 8.3 e 8.4, MariaDB 10.11 e
 PHPUnit 9.6. A execução no computador do estudante (Windows, XAMPP com PHP
-8.2 e MariaDB) foi feita por ele, e é a que aparece no vídeo.
+8.2 e MariaDB) foi feita por ele.
 
 O estudante decidiu a tecnologia (PHP e MySQL no XAMPP), aceitou a proposta
 de escopo (agendamento como entidade principal, perfis cliente e
-administrador), executou o sistema e os testes no próprio computador, fez os
-commits, gravou o vídeo e revisou o material.
+administrador), executou o sistema no próprio computador, fez os commits e
+revisou o material.
 
-> Os campos "modificações realizadas" e "avaliação crítica" abaixo devem ser
-> preenchidos pelo estudante, com suas próprias palavras.
+> Nos registros 11 a 14, as avaliações críticas usam as palavras do próprio
+> estudante, ditadas por ele; a ferramenta só corrigiu pontuação e regência.
 
 ---
 
@@ -274,9 +275,9 @@ modelos e usuários como entidades de apoio; proposta de dois perfis
 instalado; e a lista das cinco boas práticas opcionais que seriam feitas
 (`.env`, migrações, paginação, limite de tentativas e testes de integração).
 
-**Modificações realizadas:** [preencher]
+**Modificações realizadas:** Nenhuma. Escolhi a tecnologia e aceitei o escopo proposto.
 
-**Avaliação crítica:** [preencher]
+**Avaliação crítica:** Escolhi o PHP e o MySQL no XAMPP porque eu já usava, então juntei o útil ao agradável.
 
 ---
 
@@ -306,9 +307,9 @@ da folha de estilo; scripts `bin/migrar.php` e `bin/criar-admin.php`.
 - A motorização do Corolla, escrita como "2.0 híbrido" no Trabalho I, foi
   corrigida para 1.8 nos dados iniciais do banco (migração 005).
 
-**Modificações realizadas:** [preencher]
+**Modificações realizadas:** Nenhuma no código. Apliquei as etapas no repositório com o script, enviei ao GitHub, criei o banco com `bin/migrar.php` e o administrador com `bin/criar-admin.php` no meu XAMPP, e testei o catálogo e o login de administrador.
 
-**Avaliação crítica:** [preencher]
+**Avaliação crítica:** Entendi que o backend é a parte que roda no servidor: ele confere o e-mail e a senha no login, valida os dados e grava as informações no banco de dados.
 
 ---
 
@@ -335,9 +336,9 @@ todas as capturas foram refeitas.
 pedidos simultâneos da mesma sessão ficam em fila (trava do arquivo de
 sessão do PHP). Isso foi registrado como limitação em vez de ser escondido.
 
-**Modificações realizadas:** [preencher]
+**Modificações realizadas:** Nenhuma.
 
-**Avaliação crítica:** [preencher]
+**Avaliação crítica:** Não rodei os testes automatizados no meu computador; conferi o funcionamento do sistema pelo navegador.
 
 ---
 
@@ -350,6 +351,6 @@ permissões), `docs/modelo-de-dados.md`, `docs/api.md`,
 `docs/checklist-requisitos.md`, a parte do Trabalho II deste registro e o
 relatório técnico com as quatorze seções e os anexos de evidências.
 
-**Modificações realizadas:** [preencher]
+**Modificações realizadas:** Ditei o texto das seções 13 e 14 do relatório; a ferramenta corrigiu a pontuação e a regência.
 
-**Avaliação crítica:** [preencher]
+**Avaliação crítica:** Aprendi bastante com as etapas e o passo a passo deste projeto. Isso agregou muito à minha compreensão de sistemas computacionais, e hoje sinto mais confiança para entrar em novos projetos envolvendo esse tema.
